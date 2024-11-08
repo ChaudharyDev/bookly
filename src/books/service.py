@@ -20,7 +20,6 @@ class BookService:
     async def create_book(self,book_data:BookCreateModel,session:AsyncSession):
         book_data_dict = book_data.model_dump()
         
-        print(book_data_dict)
         new_book = Book(
             **book_data_dict
         )
@@ -46,7 +45,6 @@ class BookService:
         else:
             return None
         
-        pass
     async def delete_book(self,book_uid:str,session:AsyncSession):
         book_to_delete = self.get_book(book_uid,session)
     
