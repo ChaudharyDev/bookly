@@ -8,7 +8,6 @@ class BookService:
         statement = select(Book).order_by(desc(Book.created_at))
         
         result = await session.exec(statement)
-        
         return result.all()
     
     async def get_book(self,book_uid:str,session:AsyncSession):
