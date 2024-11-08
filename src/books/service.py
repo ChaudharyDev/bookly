@@ -29,7 +29,6 @@ class BookService:
         session.add(new_book) 
         
         await session.commit()  
-        
         return new_book
         
     async def update_book(self,book_uid:str,update_data:BookUpdateModel,session:AsyncSession):
