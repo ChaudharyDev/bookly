@@ -22,8 +22,8 @@ class Book(SQLModel, table=True):
     published_date : str
     page_count : int
     language : str
-    created_at : datetime = Field(Column(pg.TIMESTAMP,default=datetime.now))
-    update_at : datetime = Field(Column(pg.TIMESTAMP,default=datetime.now))
+    created_at : datetime = Field(sa_column=Column(pg.TIMESTAMP,default=datetime.now))
+    update_at : datetime = Field(sa_column=Column(pg.TIMESTAMP,default=datetime.now))
     
     
     def __repr__(self):
