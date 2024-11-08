@@ -1,26 +1,34 @@
-from fastapi import APIRouter,status
+from fastapi import APIRouter,status,Depends
 from pydantic import BaseModel
 from src.books.schemas import Book,BookResponse,BookUpdateModel
-from src.books.book_data import books
+# from src.books.book_data import books
 from typing import List,Optional
 from fastapi.exceptions import HTTPException
+from src.db.main import get_session
+from sqlmodel.ext.asyncio.session import AsyncSession
+from .service import BookService
+
 
 
 book_router = APIRouter()
 
 
 @book_router.get('/',response_model=List[BookResponse])
-def get_books(id:Optional[int] = None):
-    
+async def get_books(id:Optional[str] = None,session:AsyncSession=Depends(get_session)):
+    get_book=BookService()
     if id:
-        for book in books:
-            if book['id']== id:
-                
-                return [book]
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Book not found")
+        result = await get_book.get_book(book_uid=id,session=session)
+        return [result]
+    else:
+        return await get_book.get_all_book(session=session)
+    # if id:
+    #     for book in books:
+    #         if book['id']== id:
+    #             return [book]
+    #     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Book not found")
         # return {"error":f"not found id:{id}"}
                 
-    return books
+    # return books
 
 
 
