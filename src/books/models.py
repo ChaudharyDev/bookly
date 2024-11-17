@@ -5,15 +5,16 @@ import uuid
 
 
 
+
 class Book(SQLModel, table=True):
     __tablename__="books"
     
     uid : uuid.UUID = Field(
+        default_factory=uuid.uuid4,
         sa_column=Column(
-           pg.UUID,
-           nullable=False,
+           pg.UUID(as_uuid=True),
            primary_key=True,
-           default=uuid.uuid4() 
+           nullable=False
         )
     )
     title : str
